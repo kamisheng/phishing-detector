@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>钓鱼网站预警系统 - 设置</title>
+  <link rel="stylesheet" href="./options.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- 页头 -->
+    <header class="header">
+      <h1 class="title">⚙️ 插件设置</h1>
+      <p class="subtitle">配置钓鱼网站预警系统的检测行为与提醒方式</p>
+    </header>
+
+    <!-- 设置表单 -->
+    <main class="form">
+      <!-- 1. 自动检测开关 -->
+      <section class="form-item" data-key="auto_detect_enabled">
+        <div class="form-item-header">
+          <label class="form-label" for="auto_detect_enabled">自动检测</label>
+          <label class="switch">
+            <input type="checkbox" id="auto_detect_enabled">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="form-desc">开启后，页面加载完成时自动触发检测（受检测间隔限制）</p>
+      </section>
+
+      <!-- 2. 风险弹窗提醒开关 -->
+      <section class="form-item" data-key="warning_popup_enabled">
+        <div class="form-item-header">
+          <label class="form-label" for="warning_popup_enabled">风险弹窗提醒</label>
+          <label class="switch">
+            <input type="checkbox" id="warning_popup_enabled">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="form-desc">检测到风险网站时，弹出浏览器通知与页面顶部警告横幅</p>
+      </section>
+
+      <!-- 3. 仅高风险弹窗开关 -->
+      <section class="form-item" data-key="notify_high_only" id="notifyHighOnlyItem">
+        <div class="form-item-header">
+          <label class="form-label" for="notify_high_only">仅高风险提醒</label>
+          <label class="switch">
+            <input type="checkbox" id="notify_high_only">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="form-desc">开启后，仅 HIGH 风险触发弹窗；关闭则 LOW/MID/HIGH 均提醒</p>
+      </section>
+
+      <!-- 4. 检测间隔时间 -->
+      <section class="form-item" data-key="min_detect_interval">
+        <div class="form-item-header">
+          <label class="form-label" for="min_detect_interval">检测间隔时间</label>
+          <div class="inline-input">
+            <input type="number" id="min_detect_interval" min="10" max="3600" step="10">
+            <span class="unit">秒</span>
+          </div>
+        </div>
+        <p class="form-desc">同一 URL 两次自动检测的最小间隔（10 - 3600 秒）</p>
+      </section>
+
+      <!-- 5. 后端 API 地址 -->
+      <section class="form-item" data-key="api_base_url">
+        <div class="form-item-header">
+          <label class="form-label" for="api_base_url">后端 API 地址</label>
+        </div>
+        <input type="text" id="api_base_url" class="text-input" placeholder="http://localhost:8080">
+        <p class="form-desc">插件检测请求的目标服务地址，修改后请确保后端服务可用</p>
+      </section>
+
+      <!-- 操作按钮 -->
+      <div class="action-bar">
+        <button class="btn primary" id="saveBtn">保存设置</button>
+        <button class="btn secondary" id="resetBtn">恢复默认</button>
+        <button class="btn ghost" id="testApiBtn">测试连接</button>
+      </div>
+    </main>
+
+    <!-- 状态提示条 -->
+    <div class="toast hidden" id="toast"></div>
+  </div>
+
+  <!-- 引入顺序：先 storage 工具，再 options 逻辑 -->
+  <script src="../utils/storage.js"></script>
+  <script src="./options.js"></script>
+</body>
+
+</html>

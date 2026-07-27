@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>钓鱼网站预警系统 - 联调测试清单</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: #f5f7fa;
+      color: #222;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 24px 28px;
+      background: linear-gradient(135deg, #165dff 0%, #4080ff 100%);
+      color: #fff;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .section {
+      padding: 20px 28px;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #1d2129;
+      margin-bottom: 14px;
+      padding-left: 10px;
+      border-left: 3px solid #165dff;
+    }
+
+    .test-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 10px 0;
+      gap: 12px;
+    }
+
+    .test-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .test-content {
+      flex: 1;
+    }
+
+    .test-name {
+      font-size: 14px;
+      color: #1d2129;
+      line-height: 1.6;
+    }
+
+    .test-desc {
+      font-size: 12px;
+      color: #86909c;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .status-bar {
+      position: sticky;
+      bottom: 0;
+      padding: 16px 28px;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .progress-text {
+      color: #666;
+    }
+
+    .progress-num {
+      font-weight: 600;
+      color: #165dff;
+    }
+
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn.primary {
+      background: #165dff;
+      color: #fff;
+    }
+
+    .btn.primary:hover {
+      background: #0e4fdb;
+    }
+
+    .btn.secondary {
+      background: #f0f2f5;
+      color: #333;
+      margin-left: 8px;
+    }
+
+    .test-item.checked .test-name {
+      text-decoration: line-through;
+      color: #86909c;
+    }
+
+    .auto-test {
+      margin-top: 16px;
+      padding: 14px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .auto-test-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .auto-test-desc {
+      font-size: 12px;
+      color: #86909c;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .auto-test pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      overflow-x: auto;
+      font-family: 'Consolas', 'Monaco', monospace;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-left: 6px;
+    }
+
+    .tag.chrome { background: #e8f3ff; color: #165dff; }
+    .tag.edge { background: #fff2e8; color: #ff7d00; }
+    .tag.both { background: #f0f9eb; color: #67c23a; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🧪 联调与测试清单</h1>
+      <p>钓鱼网站智能预警系统 - 完整测试用例核对表</p>
+    </header>
+
+    <!-- 9.1 本地联调 -->
+    <section class="section">
+      <h2 class="section-title">9.1 本地联调</h2>
+
+      <div class="test-item">
+        <input type="checkbox" id="t1">
+        <div class="test-content">
+          <div class="test-name">Chrome 加载已解压扩展程序，开启开发者模式</div>
+          <div class="test-desc">访问 chrome://extensions → 开启右上角"开发者模式" → 点击"加载已解压的扩展程序" → 选择 extension 目录</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t2">
+        <div class="test-content">
+          <div class="test-name">连接本地 SpringBoot 后端（localhost:8080）进行接口联调</div>
+          <div class="test-desc">启动后端服务 → 在 Options 设置页确认 API 地址为 http://localhost:8080 → 点击"测试连接"按钮验证</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t3">
+        <div class="test-content">
+          <div class="test-name">验证各状态 Popup 展示正确</div>
+          <div class="test-desc">测试 5 种状态：idle（初始）/ detecting（检测中）/ safe（安全）/ warning（风险）/ error（错误）。访问普通 HTTPS 网站点击检测，确认安全状态展示正常</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t4">
+        <div class="test-content">
+          <div class="test-name">验证 Content Script 页面信息采集完整</div>
+          <div class="test-desc">在 Service Worker 控制台执行测试脚本，验证 GET_PAGE_INFO 返回完整字段（url/title/text/html/domain/protocol/meta/forms）</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t5">
+        <div class="test-content">
+          <div class="test-name">验证高风险警告横幅正常注入与关闭</div>
+          <div class="test-desc">访问高风险网站 → 确认页面顶部出现红色警告横幅 → 点击"我知道了"按钮 → 确认横幅消失</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t6">
+        <div class="test-content">
+          <div class="test-name">验证 Service Worker 消息路由正常</div>
+          <div class="test-desc">运行 test-runner.js 的 testMessageRouting 测试组，验证所有 action 路由正确，type 字段向后兼容</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t7">
+        <div class="test-content">
+          <div class="test-name">验证缓存命中与未命中两种流程</div>
+          <div class="test-desc">首次检测某域名（缓存未命中 → 调用 API）→ 再次检测同域名（缓存命中 → 立即返回）。在 SW 控制台检查响应中 fromCache 字段</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.2 异常场景测试 -->
+    <section class="section">
+      <h2 class="section-title">9.2 异常场景测试</h2>
+
+      <div class="test-item">
+        <input type="checkbox" id="t8">
+        <div class="test-content">
+          <div class="test-name">网络错误 / API 超时处理</div>
+          <div class="test-desc">关闭后端服务 → 点击检测 → 确认 Popup 显示"网络连接失败，请检查后端服务是否启动" → 错误状态可重试</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t9">
+        <div class="test-content">
+          <div class="test-name">后端返回错误码时的 UI 展示</div>
+          <div class="test-desc">模拟后端返回 500/404 → 确认 Popup 错误状态正确展示 HTTP 状态码信息 → 不会白屏或卡死</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t10">
+        <div class="test-content">
+          <div class="test-name">采集超大页面时的性能测试（10万+字符）</div>
+          <div class="test-desc">访问大型新闻/文档页面（如长篇 Wikipedia）→ 点击检测 → 确认采集不卡顿、不崩溃。Content Script 已限制 text≤10000 字符、html≤500000 字符</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t11">
+        <div class="test-content">
+          <div class="test-name">不支持 chrome-extension:// 协议页面的优雅降级</div>
+          <div class="test-desc">打开 chrome://settings 或 chrome-extension://xxx 页面 → 点击扩展图标 → 点击检测 → 确认显示"当前页面协议不支持检测"，不会崩溃</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.3 跨浏览器兼容 -->
+    <section class="section">
+      <h2 class="section-title">9.3 跨浏览器兼容</h2>
+
+      <div class="test-item">
+        <input type="checkbox" id="t12">
+        <div class="test-content">
+          <div class="test-name">Chrome 浏览器测试<span class="tag chrome">Chrome</span></div>
+          <div class="test-desc">在 Chrome 中完成 9.1 所有联调测试项，确认功能正常</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t13">
+        <div class="test-content">
+          <div class="test-name">Edge 浏览器测试（兼容 Extension API）<span class="tag edge">Edge</span></div>
+          <div class="test-desc">在 Edge 中加载扩展（edge://extensions → 开发者模式）→ 重复 9.1 主要测试项 → 确认 MV3 API 兼容（chrome.* 命名空间在 Edge 中可用）</div>
+        </div>
+      </div>
+
+      <div class="test-item">
+        <input type="checkbox" id="t14">
+        <div class="test-content">
+          <div class="test-name">Edge 通知与横幅功能验证<span class="tag edge">Edge</span></div>
+          <div class="test-desc">在 Edge 中触发高风险检测 → 确认浏览器通知（chrome.notifications）正常弹出 → 确认页面警告横幅正常注入</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 自动化测试入口 -->
+    <section class="section">
+      <h2 class="section-title">自动化测试</h2>
+      <div class="auto-test">
+        <div class="auto-test-title">运行 test-runner.js 自动化测试</div>
+        <div class="auto-test-desc">
+          以下测试可自动执行：消息路由、缓存机制、设备 ID、配置管理、历史记录、特殊协议页面、参数校验。<br>
+          在 Service Worker 控制台（chrome://extensions → 扩展 → "Service Worker" 链接）中粘贴以下命令：
+        </div>
+        <pre>importScripts('test/test-runner.js');
+runAllTests();</pre>
+        <div class="auto-test-desc" style="margin-top: 10px;">
+          或运行单个测试组：
+        </div>
+        <pre>runTest('testMessageRouting');
+runTest('testCache');
+runTest('testDeviceId');</pre>
+      </div>
+    </section>
+
+    <!-- 状态栏 -->
+    <div class="status-bar">
+      <span class="progress-text">
+        已完成：<span class="progress-num" id="progressNum">0</span> / <span id="totalNum">14</span>
+      </span>
+      <div>
+        <button class="btn primary" id="exportBtn">导出报告</button>
+        <button class="btn secondary" id="resetBtn">重置</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 进度统计
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const progressNum = document.getElementById('progressNum');
+    const totalNum = document.getElementById('totalNum');
+    totalNum.textContent = checkboxes.length;
+
+    function updateProgress() {
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      progressNum.textContent = checked;
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          cb.closest('.test-item').classList.add('checked');
+        } else {
+          cb.closest('.test-item').classList.remove('checked');
+        }
+      });
+      // 持久化到 localStorage
+      const states = {};
+      checkboxes.forEach((cb, i) => states[i] = cb.checked);
+      localStorage.setItem('testChecklist', JSON.stringify(states));
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+
+    // 恢复勾选状态
+    const saved = JSON.parse(localStorage.getItem('testChecklist') || '{}');
+    checkboxes.forEach((cb, i) => {
+      if (saved[i]) cb.checked = true;
+    });
+    updateProgress();
+
+    // 导出报告
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const items = document.querySelectorAll('.test-item');
+      let report = '钓鱼网站预警系统 - 测试报告\n';
+      report += '生成时间：' + new Date().toLocaleString() + '\n';
+      report += '========================================\n\n';
+      items.forEach((item, i) => {
+        const cb = item.querySelector('input');
+        const name = item.querySelector('.test-name').textContent.trim();
+        const status = cb.checked ? '[✓ 通过]' : '[✗ 未测]';
+        report += `${status} ${i + 1}. ${name}\n`;
+      });
+      report += '\n========================================\n';
+      report += `总计：${checkboxes.length} | 已通过：${document.querySelectorAll('input[type="checkbox"]:checked').length}\n`;
+
+      const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `test-report-${Date.now()}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // 重置
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (!confirm('确定要重置所有测试勾选吗？')) return;
+      checkboxes.forEach(cb => cb.checked = false);
+      localStorage.removeItem('testChecklist');
+      updateProgress();
+    });
+  </script>
+</body>
+
+</html>

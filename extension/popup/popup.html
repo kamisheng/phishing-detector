@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网址安全检测</title>
+  <link rel="stylesheet" href="./popup.css">
+</head>
+
+<body>
+  <!-- 页头 -->
+  <header class="header">
+    <div class="logo">🔍 网站安全检测</div>
+  </header>
+
+  <!-- 当前URL区域 -->
+  <div class="url-box">
+    <span class="label">当前页面：</span>
+    <div class="url-text" id="currentUrl">加载中...</div>
+  </div>
+
+  <!-- 1. idle 初始状态 -->
+  <div class="state idle-state" id="idleState">
+    <p class="tip">点击按钮开始安全分析</p>
+    <button class="btn primary" id="startDetectBtn">开始检测</button>
+  </div>
+
+  <!-- 2. detecting 检测中 -->
+  <div class="state detect-state hidden" id="detectState">
+    <div class="loading-spin"></div>
+    <p class="tip">正在进行分析...</p>
+    <button class="btn primary disabled" disabled>检测中</button>
+  </div>
+
+  <!-- 3. safe 安全状态 -->
+  <div class="state safe-state hidden" id="safeState">
+    <div class="icon safe-icon">✅</div>
+    <h3 class="status-text">该网站安全</h3>
+    <div class="source-badge hidden" id="safeSourceBadge"></div>
+    <div class="score-wrap">
+      <div class="score-circle">
+        <span id="safePercent">100%</span>
+      </div>
+      <p>风险评分：<span id="safeScore">0.00</span></p>
+    </div>
+    <div class="desc-box">
+      <h4>分析说明</h4>
+      <p id="safeDesc">网站符合安全标准</p>
+    </div>
+    <div class="feature-panel">
+      <h4>URL特征详情</h4>
+      <div class="feature-list" id="featureList"></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn primary" id="reDetectSafe">重新检测</button>
+      <button class="btn secondary" id="viewHistory">查看历史</button>
+    </div>
+  </div>
+
+  <!-- 4. warning 风险状态 -->
+  <div class="state warn-state hidden" id="warnState">
+    <div class="icon warn-icon">⚠️</div>
+    <h3 class="status-text" id="warnLevel">中风险网站</h3>
+    <div class="source-badge hidden" id="warnSourceBadge"></div>
+    <div class="score-wrap">
+      <div class="score-circle warn-circle">
+        <span id="warnPercent">30%</span>
+      </div>
+      <p>风险评分：<span id="warnScore">0.70</span></p>
+    </div>
+    <div class="desc-box">
+      <h4>风险说明 & 安全建议</h4>
+      <p id="warnDesc">该网址存在可疑特征，请谨慎访问</p>
+    </div>
+    <div class="btn-group">
+      <button class="btn primary" id="reDetectWarn">重新检测</button>
+      <button class="btn danger" id="reportUrl">举报可疑网址</button>
+    </div>
+  </div>
+
+  <!-- 5. error 错误状态 -->
+  <div class="state error-state hidden" id="errorState">
+    <div class="icon error-icon">❌</div>
+    <h3 class="status-text">检测失败</h3>
+    <p class="error-msg" id="errorMsg">网络异常，无法获取检测结果</p>
+    <button class="btn primary" id="retryBtn">重试</button>
+  </div>
+
+  <script src="./popup.js"></script>
+</body>
+
+</html>
